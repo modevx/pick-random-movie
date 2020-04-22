@@ -11,12 +11,20 @@
   </head>
   <body>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 mx-auto text-center bg-primary mt-5 p-5 rounded">
-          <h1 id="title"></h1>
-          <img id="image"/>
+    <div class="container">     
+      <div class="mx-auto text-center ">
+
+        <h1 id="title-find">Find A Movie</h1>
+
+        <div class="input-group mb-3">
+          <input id="input-find" type="text" class="form-control" placeholder="enter movie title">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="btn-find">Find Movie</button>
+          </div>
         </div>
+
+        <div id="search-results"></div>
+
       </div>
     </div>
 
