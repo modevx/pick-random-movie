@@ -1,12 +1,13 @@
 // Variables
 const inputFind = document.getElementById('input-find');
-const userInput = inputFind.value;
+let userInput;
 const btnFind = document.getElementById('btn-find');
 const ui = new UI();
-const movieToFind = new Movie(userInput);
 
 // Search button event listener
 btnFind.addEventListener('click', (e) => {
+  userInput = inputFind.value;
+  const movieToFind = new Movie(userInput);
 
   movieToFind.findMovie()
     .then((responseMovies) => {
