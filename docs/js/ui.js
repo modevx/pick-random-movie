@@ -14,7 +14,7 @@ class UI {
 
     // Create HTML string of all movie titles to be inserted
     returnedMovies.forEach((movie) => {
-      if(movie.poster_path !== null) {
+      if(movie.poster_path != null) {
         movieTitles +=
         `
           <div class="card mb-3" style="max-width: 540px">
