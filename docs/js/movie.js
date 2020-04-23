@@ -1,11 +1,11 @@
 class Movie {
   constructor(userInput) {
     this.userTitle = userInput;    
-    // this.id;
-    // this.title;
-    // this.poster_path;  
-    // this.overview;     
-    // this.watched;      
+    this.id;
+    this.title;
+    this.poster_path;  
+    this.overview;     
+    this.watched;      
     this.apiKey = '8138a9c0b29932d322390d4e16afab9f';
   }
 
