@@ -27,7 +27,7 @@ class UI {
                 <p class="card-text">${movie.overview}</p>
                 <div class="text-center">
                   <button type="button" class="btn btn-success mx-2">Add Movie!</button>
-                  <button type="button" class="btn btn-primary mx-2">Done</button>
+                  <button type="button" class="btn btn-danger mx-2">Done</button>
                 </div>
               </div>
             </div>
