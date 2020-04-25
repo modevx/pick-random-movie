@@ -1,20 +1,25 @@
 class Storage {
   constructor() {
-    
+    this.userMovies = [];
+  }
+
+  // Get existing movie list to display
+  getUserMovies() {
+    return this.userMovies;
   }
 
   // Add movie to list
-  addMovie(){
+  addToUserMovies(){
 
   }
 
   // Delete movie from list
-  deleteMovie() {
+  deleteFromUserMovies() {
 
   }
 
   // Reset _watchList_ once user watches all movies in list
-  resetMovieList() {
-    
+  resetUserMovies() {
+
   }
 }
