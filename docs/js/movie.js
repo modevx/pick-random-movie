@@ -1,5 +1,5 @@
 class Movie {
-  constructor(userInput) {
+  constructor() {
     this.userTitle = userInput;    
     this.id;
     this.title;
@@ -10,11 +10,11 @@ class Movie {
   }
 
   // Fetch movie from API
-  async findMovie() {
-    const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.userTitle}`);
+  // async findMovie() {
+  //   const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.userTitle}`);
 
-    const responseData = await response.json();
+  //   const responseData = await response.json();
 
-    return responseData;
-  }
+  //   return responseData;
+  // }
 }
