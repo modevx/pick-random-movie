@@ -41,11 +41,11 @@ btn_search.addEventListener('click', (e) => {
   console.log(btns_add);
 
   for(let i = 0; i < btns_add.length; i++) {
-    btns_add[i].addEventListener('click', addMovie);
+    btns_add[i].addEventListener('click', () => {
+      console.log('Why cant I see this!?');
+    });
   }
 
 });
 
-function addMovie() {
-  console.log(i);
-}
+
