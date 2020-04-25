@@ -35,7 +35,18 @@ class UI {
 
     this.resultsElement.innerHTML = displayMovies;
 
-    // this.title.textContent = returnedMovies.results[0].original_title;
-    // this.image.setAttribute('src', `https://image.tmdb.org/t/p/w154${responseMovies.results[0].poster_path}`)
-  }
+    // Create HTMLCollection of 'btn-add'
+    // add eventListener to create new movie object and add to usersMovies array
+
+    let btns_add = document.getElementsByClassName('btn-add');
+    console.log(btns_add);
+
+    for(let i = 0; i < btns_add.length; i++) {
+      btns_add[i].addEventListener('click', () => {
+        console.log(`I clicked ADD button ${i + 1}!`);
+      });
+    }
+      // this.title.textContent = returnedMovies.results[0].original_title;
+      // this.image.setAttribute('src', `https://image.tmdb.org/t/p/w154${responseMovies.results[0].poster_path}`)
+    }
 }
