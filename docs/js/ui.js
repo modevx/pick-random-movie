@@ -24,7 +24,7 @@ class UI {
                   <h5 class="card-title">${movie.title}</h5>
                   <p class="card-text">${movie.overview}</p>
                   <div class="text-center">
-                    <button id="btn-add"type="button" class="btn btn-success mx-2">Add Movie!</button>
+                    <button type="button" class="btn btn-success mx-2 btn-add">Add Movie!</button>
                   </div>
                 </div>
               </div>
