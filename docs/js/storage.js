@@ -9,17 +9,17 @@ class Storage {
   }
 
   // Add movie to list
-  addToUserMovies(){
-
+  addToUserMovies(thisMovie){
+    this.userMovies.push(thisMovie);
   }
 
   // Delete movie from list
   deleteFromUserMovies() {
-
+    // this.userMovies.filter()
   }
 
-  // Reset _watchList_ once user watches all movies in list
+  // Reset all movies 'watched' property to false
   resetUserMovies() {
-
+    // this.userMovies.map()
   }
 }
