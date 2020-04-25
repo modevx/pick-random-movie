@@ -16,7 +16,7 @@ btn_search.addEventListener('click', (e) => {
   // create variable that holds user's search input
   // make API call that returns matching titles
   // create new array filtering movies without images
-  // display results from new filtered array
+  // display results from new filtered array / create btn-add elements
   const usersMovie = input_movie.value;
   
   tmdb.searchMovieTitles(usersMovie)
