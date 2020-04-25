@@ -33,18 +33,6 @@ btn_search.addEventListener('click', (e) => {
   })
   .catch((err) => console.log(err));
 
-  // Add movie to userMovies
-  // btn_add.addEventListener('click', addMovie);
-
-  let btns_add = document.getElementsByClassName('.btn-add');
-  console.log(btns_add);
-
-  for(let i = 0; i < btns_add.length; i++) {
-    btns_add[i].addEventListener('click', () => {
-      console.log('Why cant I see this!?');
-    });
-  }
-
 });
 
 
