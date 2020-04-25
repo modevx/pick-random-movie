@@ -1,15 +1,19 @@
 // Variables
-const input_movie = document.getElementById('input-find');
 const btn_search = document.getElementById('btn-find');
-let arr_movies;
+const input_movie = document.getElementById('input-find');
 
 const ui = new UI();
 const tmdb = new TMDB();
 const storage = new Storage();
 
+let arr_searchResults;
+
+// Get user's current movie list
+const usersMovies = storage.getUserMovies();
+
 // Search button event listener
 btn_search.addEventListener('click', (e) => {
-  // movie user's searching for
+  // movie to search for
   const usersMovie = input_movie.value;
   
   // API call that returns matching titles
@@ -17,19 +21,31 @@ btn_search.addEventListener('click', (e) => {
   .then((returnedMovies) => {
     
     // create new array filtering out movies without images
-      arr_movies = [];
-      returnedMovies.results.forEach(movie => {
-        if(movie.poster_path != null) {
-          arr_movies.push(movie);
-        }
-      });
+    arr_searchResults = [];
+    returnedMovies.results.forEach(movie => {
+      if(movie.poster_path != null) {
+        arr_searchResults.push(movie);
+      }
+    });
       
-      // display results from new filtered array
-      ui.displayMovieResults(arr_movies);      
+    // display results from new filtered array
+    ui.displayMovieResults(arr_searchResults);      
 
-      console.log('NEW MOVIE ARRAY:', arr_movies);
-    })
-    .catch((err) => console.log(err));
-})
+  })
+  .catch((err) => console.log(err));
 
+  // Add movie to userMovies
+  // btn_add.addEventListener('click', addMovie);
 
+  let btns_add = document.querySelectorAll('#btn-add');
+  console.log(btns_add);
+
+  for(let i = 0; i < btns_add.length; i++) {
+    btns_add[i].addEventListener('click', addMovie);
+  }
+
+});
+
+function addMovie() {
+  console.log(i);
+}
