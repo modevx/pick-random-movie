@@ -13,14 +13,14 @@ const usersMovies = storage.getUserMovies();
 
 // Search button event listener
 btn_search.addEventListener('click', (e) => {
-  // movie to search for
+  // create variable that holds user's search input
+  // make API call that returns matching titles
+  // create new array filtering movies without images
+  // display results from new filtered array
   const usersMovie = input_movie.value;
   
-  // API call that returns matching titles
   tmdb.searchMovieTitles(usersMovie)
-  .then((returnedMovies) => {
-    
-    // create new array filtering out movies without images
+  .then((returnedMovies) => {    
     arr_searchResults = [];
     returnedMovies.results.forEach(movie => {
       if(movie.poster_path != null) {
@@ -28,7 +28,6 @@ btn_search.addEventListener('click', (e) => {
       }
     });
       
-    // display results from new filtered array
     ui.displayMovieResults(arr_searchResults);      
 
   })
@@ -37,7 +36,7 @@ btn_search.addEventListener('click', (e) => {
   // Add movie to userMovies
   // btn_add.addEventListener('click', addMovie);
 
-  let btns_add = document.querySelectorAll('#btn-add');
+  let btns_add = document.getElementsByClassName('.btn-add');
   console.log(btns_add);
 
   for(let i = 0; i < btns_add.length; i++) {
