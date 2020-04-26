@@ -11,16 +11,17 @@ class Storage {
     } else {
       this.movieList = localStorage.getItem('ls_movieList');
     }
+    console.log('getuserMovies():', this.movieList);
   }
 
   // Add movie to list
   addToUserMovies(thisMovie){
     try {
-      const updatedMovieList = this.movieList;
-      updatedMovieList.push(thisMovie);
-      console.log(updatedMovieList);
+      const currentMovieList = this.movieList;
+      console.log('addToUserMovies(): currentMovieList', currentMovieList);
+      // currentMovieList.push(thisMovie);
+      // console.log(currentMovieList);
       // this.movieList.push(thisMovie);
-      // console.log(this.movieList);
       // localStorage.setItem('ls_movieList', this.movieList);
     } catch {
       throw 'Error adding movie to local storage..';
