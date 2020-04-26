@@ -4,12 +4,12 @@ const input_movie = document.getElementById('input-find');
 
 const ui = new UI();
 const tmdb = new TMDB();
-const storage = new Storage();
 
 let arr_searchResults;
 
 // Get user's current movie list
-const localStorage_movies = storage.getUserMovies();
+let localStorage_movies = Storage.getUserMovies();
+console.log('localStorage_movies:', localStorage_movies);
 
 // Search button event listener
 btn_search.addEventListener('click', (e) => {
