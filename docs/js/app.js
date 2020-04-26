@@ -9,7 +9,7 @@ let arr_searchResults;
 
 // Get user's current movie list
 let localStorage_movies = Storage.getUserMovies();
-console.log('localStorage_movies:', localStorage_movies);
+// console.log('localStorage_movies:', localStorage_movies);
 
 // Search button event listener
 btn_search.addEventListener('click', (e) => {
