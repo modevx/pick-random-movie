@@ -46,9 +46,8 @@ class UI {
 
     for(let i = 0; i < btns_add.length; i++) {
       btns_add[i].addEventListener('click', (e) => {
-        // attach STORAGE method to add users to local storage
         const thisMovie = arr_searchResults[i];
-        storage.addToUserMovies(thisMovie);
+        Storage.addToUserMovies(thisMovie);
       });
     }
   }
