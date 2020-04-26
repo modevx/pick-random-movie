@@ -6,13 +6,14 @@ class UI {
     this.resultsElement = document.getElementById("search-results");
   }
 
-  displayMovieResults(returnedMovies) {
+  displayMovieResults(arr_searchResults) {
     
     let displayMovies = "";
 
     // Create HTML string of all movie titles to be inserted
-    returnedMovies.forEach((movie) => {      
-        displayMovies +=
+    arr_searchResults.forEach((movie) => {      
+      
+      displayMovies +=
         `
           <div class="card mb-3" style="max-width: 540px">
             <div class="row no-gutters">
@@ -39,11 +40,17 @@ class UI {
     // add eventListener to create new movie object and add to usersMovies array
 
     let btns_add = document.getElementsByClassName('btn-add');
-    const storageAdd = new Storage();
+    const storage = new Storage();
 
     for(let i = 0; i < btns_add.length; i++) {
-      btns_add[i].addEventListener('click', () => {
-        storageAdd.addToUserMovies(thisMovie); //build out this method
+      btns_add[i].addEventListener('click', (e) => {
+        //build out this method
+        
+        const thisMovie = arr_searchResults[i];
+        storage.addToUserMovies(thisMovie);
+
+        // console.log(`Button ${i} clicked`); 
+        // console.log(arr_searchResults[i]); 
       });
     }
   }
