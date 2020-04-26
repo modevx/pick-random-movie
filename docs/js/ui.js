@@ -4,34 +4,39 @@ class UI {
   }
 
   displayMovieResults(arr_searchResults) {
-    
     let displayMovies = "";
+    const noResultsMessage = 'Sorry, we don\'t have that kids\' movie';
 
-    // Create HTML string of all movie titles to be inserted
-    arr_searchResults.forEach((movie) => {      
-      
-      displayMovies +=
-        `
-          <div class="card mb-3" style="max-width: 540px">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="poster">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">${movie.title}</h5>
-                  <p class="card-text">${movie.overview}</p>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-success mx-2 btn-add">Add Movie!</button>
+    if(arr_searchResults.length < 1) {
+      this.resultsElement.innerHTML = `
+        <p>${noResultsMessage}</p>
+      `
+    } else {
+
+      // Create HTML string of all movie titles to be inserted
+      arr_searchResults.forEach((movie) => {    
+        displayMovies +=
+          `
+            <div class="card mb-3" style="max-width: 540px">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="poster">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">${movie.title}</h5>
+                    <p class="card-text">${movie.overview}</p>
+                    <div class="text-center">
+                      <button type="button" class="btn btn-success mx-2 btn-add">Add Movie!</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        `      
-    });
-
-    this.resultsElement.innerHTML = displayMovies;
+          `      
+      });
+      this.resultsElement.innerHTML = displayMovies;
+    }    
 
     // Create HTMLCollection of 'btn-add'
     // add eventListener to create new movie object and add to usersMovies array
@@ -41,7 +46,7 @@ class UI {
 
     for(let i = 0; i < btns_add.length; i++) {
       btns_add[i].addEventListener('click', (e) => {
-        // add this movie to localStorage
+        // attach STORAGE method to add users to local storage
         const thisMovie = arr_searchResults[i];
         storage.addToUserMovies(thisMovie);
       });
