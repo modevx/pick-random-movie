@@ -1,8 +1,5 @@
 class UI {
   constructor() {
-    // NOT USING THESE - BEING CREATED DYNAMICALLY
-    // this.title = document.getElementById('title');
-    // this.image = document.getElementById('image');
     this.resultsElement = document.getElementById("search-results");
   }
 
@@ -44,13 +41,9 @@ class UI {
 
     for(let i = 0; i < btns_add.length; i++) {
       btns_add[i].addEventListener('click', (e) => {
-        //build out this method
-        
+        // add this movie to localStorage
         const thisMovie = arr_searchResults[i];
         storage.addToUserMovies(thisMovie);
-
-        // console.log(`Button ${i} clicked`); 
-        // console.log(arr_searchResults[i]); 
       });
     }
   }
