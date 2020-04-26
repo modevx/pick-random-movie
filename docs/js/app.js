@@ -9,7 +9,7 @@ const storage = new Storage();
 let arr_searchResults;
 
 // Get user's current movie list
-const usersMovies = storage.getUserMovies();
+const localStorage_movies = storage.getUserMovies();
 
 // Search button event listener
 btn_search.addEventListener('click', (e) => {
@@ -17,6 +17,7 @@ btn_search.addEventListener('click', (e) => {
   // make API call that returns matching titles
   // display results 
   // create btn-add elements
+  // clear search field
   const usersMovie = input_movie.value;
   
   tmdb.searchMovieTitles(usersMovie)
@@ -25,6 +26,7 @@ btn_search.addEventListener('click', (e) => {
   })
   .catch((err) => console.log(err));
 
+  input_movie.value = '';
 });
 
 
