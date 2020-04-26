@@ -43,7 +43,7 @@ class UI {
 
     for(let i = 0; i < btns_add.length; i++) {
       btns_add[i].addEventListener('click', () => {
-        console.log(`I clicked ADD button ${i + 1}!`);
+        storageAdd.addToUserMovies(thisMovie); //build out this method
       });
     }
   }
