@@ -1,16 +1,30 @@
 class Storage {
   constructor() {
-    this.userMovies = [];
+    this.movieList;
+    this.emptyMovieList = [];
   }
 
   // Get existing movie list to display
   getUserMovies() {
-    // return usersMovies list from local storage
+    if(localStorage.getItem('ls_movieList') === null ) {
+      this.movieList = this.emptyMovieList;
+    } else {
+      this.movieList = localStorage.getItem('ls_movieList');
+    }
   }
 
   // Add movie to list
   addToUserMovies(thisMovie){
-    console.log('IT WORKS!', thisMovie);
+    try {
+      const updatedMovieList = this.movieList;
+      updatedMovieList.push(thisMovie);
+      console.log(updatedMovieList);
+      // this.movieList.push(thisMovie);
+      // console.log(this.movieList);
+      // localStorage.setItem('ls_movieList', this.movieList);
+    } catch {
+      throw 'Error adding movie to local storage..';
+    }
   }
 
   // Delete movie from list
