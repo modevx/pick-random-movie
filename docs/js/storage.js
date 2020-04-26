@@ -5,12 +5,12 @@ class Storage {
 
   // Get existing movie list to display
   getUserMovies() {
-    return this.userMovies;
+    // return usersMovies list from local storage
   }
 
   // Add movie to list
   addToUserMovies(thisMovie){
-    this.userMovies.push(thisMovie);
+    console.log('IT WORKS!', thisMovie);
   }
 
   // Delete movie from list
