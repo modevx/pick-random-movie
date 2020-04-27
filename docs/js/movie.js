@@ -1,18 +1,14 @@
-class Movies {
-  constructor() {
-    this.userTitle = userInput; 
-    this.title;
-    this.poster_path;  
-    this.overview;     
+class Movie {
+  constructor(newMovie) {
+    this.id = newMovie.id;  
+    this.poster_path = newMovie.poster_path;
+    this.title = newMovie.original_title;
+    this.overview = newMovie.overview;     
     this.watched = false;      
   }
 
-  // Fetch movie from API
-  // async findMovie() {
-  //   const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.userTitle}`);
+  watched() {
+    // this.watched = true;
+  }
 
-  //   const responseData = await response.json();
-
-  //   return responseData;
-  // }
 }
