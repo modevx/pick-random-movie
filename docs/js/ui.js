@@ -1,19 +1,27 @@
 class UI {
-  constructor() {
-    this.resultsElement = document.getElementById("search-results");
-  }
 
-  displayMovieResults(arr_searchResults) {
+  static displayMovieResults(arr_searchResults) {
+    // variables
+    const resultsElement = document.getElementById("search-results");
+    const noResultsMessage = `That's not a kids movie!  Pick a different one!`;
     let displayMovies = "";
-    const noResultsMessage = 'Sorry, we don\'t have that kids\' movie';
+    
+    // re-display on new search if previous alert message
+    resultsElement.style.display = "block";
 
+    // alert if no matching results
     if(arr_searchResults.length < 1) {
-      this.resultsElement.innerHTML = `
-        <p>${noResultsMessage}</p>
+      resultsElement.innerHTML = `
+        <div class="alert alert-dismissible alert-danger">
+          ${noResultsMessage}
+        </div>
       `
+      // make alert disappear after 3 seconds
+      setTimeout(function() {
+        resultsElement.style.display = "none";
+      }, 3000);
     } else {
-
-      // Create HTML string of all movie titles to be inserted
+      // build HTML string to display search results
       arr_searchResults.forEach((movie) => {    
         displayMovies +=
           `
@@ -27,7 +35,7 @@ class UI {
                     <h5 class="card-title">${movie.title}</h5>
                     <p class="card-text">${movie.overview}</p>
                     <div class="text-center">
-                      <button type="button" class="btn btn-success mx-2 btn-add">Add Movie!</button>
+                      <button type="button" class="btn btn-add btn-success mx-2">Add To My List!</button>
                     </div>
                   </div>
                 </div>
@@ -35,20 +43,39 @@ class UI {
             </div>
           `      
       });
-      this.resultsElement.innerHTML = displayMovies;
+      resultsElement.innerHTML = displayMovies;
     }    
 
-    // Create HTMLCollection of 'btn-add'
+    // Create HTMLCollection of ADD buttons with class of 'btn-add'
     // add eventListener to create new movie object and add to usersMovies array
-
     let btns_add = document.getElementsByClassName('btn-add');
-    const storage = new Storage();
 
+    // add eventListeners to ADD buttons
     for(let i = 0; i < btns_add.length; i++) {
       btns_add[i].addEventListener('click', (e) => {
         const thisMovie = arr_searchResults[i];
         Storage.addToUserMovies(thisMovie);
       });
     }
+  }
+
+  static displayHomeScreen() {
+    // display MovieRoulette homescreen describing app
+  }
+  
+  static displayEditMoviesScreen() {
+    // display user's current list of movies with delete buttons
+  }
+
+  static displayWatchAMovieScreen() {
+    // display screen with big PICK A MOVIE TO WATCH button
+  }
+
+  static displayMovieToWatch() {
+    // display random movie from users list to watch
+  }
+
+  static alertSuccessMovieAdded(movie) {
+    // display alert when movie successfully added
   }
 }
