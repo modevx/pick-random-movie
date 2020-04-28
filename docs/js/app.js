@@ -5,24 +5,26 @@ const editMovies = document.getElementById('nav-link-edit');
 const input_movie = document.getElementById('input-find');
 const btn_search = document.getElementById('btn-find');
 
+// display div variables
+const homeDisplayDiv = document.getElementById('home');
+const watchMovieDisplayDiv = document.getElementById('watch-movie');
+const editDisplayDiv = document.getElementById('edit-list');
+const searchDisplayDiv = document.getElementById('search-results');
+
+// initialize TMBD object
 const tmdb = new TMDB();
 
-let arr_searchResults;
-
-// Get user's current movie list
-document.addEventListener('DOMContentLoaded', Storage.getUserMovies);
-
 // ADD EVENT LISTENERS TO UI ELEMENTS
-// Home nav link
+// [ ] Home nav link
 home.addEventListener('click', UI.displayHomeScreen);
 
-// Watch A Movie nav link
+// [ ] Watch A Movie nav link
 watchMovie.addEventListener('click', UI.displayMovieToWatch);
 
-// Edit My Movies nav link
+// [ ] Edit My Movies nav link
 editMovies.addEventListener('click', UI.displayEditMoviesScreen);
 
-// Find Movie button
+// [x] Find Movie button
 btn_search.addEventListener('click', TMDB.findNewMovie);
 
 
