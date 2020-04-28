@@ -9,7 +9,7 @@ class Storage {
     } else {
       movieList = JSON.parse(localStorage.getItem('ls_movieList'));
     }
-
+    console.log('getUserMovies() - movies in local storage:', movieList);
     return movieList;
   }
 
@@ -25,6 +25,7 @@ class Storage {
       if (!movieList.some(hasMovie)) {
         movieList.push(thisMovie);
         localStorage.setItem('ls_movieList', JSON.stringify(movieList));
+        console.log('addToUserMovies() - movie added!', JSON.parse(localStorage.getItem('ls_movieList')));
         // *TO-DO: create UI method alertMovieAdded() - 'Movie added!'
       } else {
         // *TO-DO: create UI method alertAlreadyAdded() - 'This movie's already in your list!'
