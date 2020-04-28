@@ -124,16 +124,24 @@ class UI {
       });
       searchDisplayDiv.innerHTML = displayOutput;
     }    
-
+    
     // Create HTMLCollection of ADD buttons with class of 'btn-add'
-    // add eventListener to create new movie object and add to usersMovies array
-    let btns_add = document.getElementsByClassName('btn-add');
+    let btns_add = document.getElementsByClassName('btn-add');    
 
     // add eventListeners to ADD buttons
     for(let i = 0; i < btns_add.length; i++) {
-      btns_add[i].addEventListener('click', (e) => {
-        const thisMovie = arr_searchResults[i];
-        Storage.addToUserMovies(thisMovie);
+      let moviesLeft = arr_searchResults;
+      let thisAddButton = btns_add[i];
+      let thisMovie = arr_searchResults[i]; 
+      
+      thisAddButton.addEventListener('click', (e) => {
+        
+        Storage.addToUserMovies(thisMovie);        
+        
+        moviesLeft = arr_searchResults.filter((movie) => movie !== thisMovie);
+        
+        UI.displayMovieResults(moviesLeft);
+
       });
     }
   }
