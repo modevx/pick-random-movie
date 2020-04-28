@@ -1,4 +1,22 @@
 class UI {
+  
+  
+  static displayHomeScreen() {
+    // display MovieRoulette homescreen describing app
+  }
+  
+  static displayWatchAMovieScreen() {
+    // display screen with big PICK A MOVIE TO WATCH button
+  }
+  
+  static displayMovieToWatch() {
+    // display random movie from users list to watch
+  }
+
+  static displayEditMoviesScreen() {
+    // display user's current list of movies with delete buttons
+    
+  }
 
   static displayMovieResults(arr_searchResults) {
     // variables
@@ -59,23 +77,13 @@ class UI {
     }
   }
 
-  static displayHomeScreen() {
-    // display MovieRoulette homescreen describing app
-  }
-  
-  static displayEditMoviesScreen() {
-    // display user's current list of movies with delete buttons
-  }
-
-  static displayWatchAMovieScreen() {
-    // display screen with big PICK A MOVIE TO WATCH button
-  }
-
-  static displayMovieToWatch() {
-    // display random movie from users list to watch
-  }
-
   static alertSuccessMovieAdded(movie) {
     // display alert when movie successfully added
   }
+  
+  static alertMovieAlreadyInList(movie) {
+    // display alert if movies already in users list
+  }
+
+
 }
