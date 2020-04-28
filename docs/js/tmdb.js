@@ -3,8 +3,24 @@ class TMDB {
     this.API_KEY = '8138a9c0b29932d322390d4e16afab9f';
   }
 
+  static findNewMovie() {
+    // create variable that holds user's search input
+    // make API call that returns matching titles
+    // display results 
+    // create btn-add elements
+    // clear search field
+    const movieToFind = input_movie.value;
+    
+    tmdb.searchMovieTitles(movieToFind)
+    .then((arr_searchResults) => {    
+      UI.displayMovieResults(arr_searchResults); 
+    })
+    .catch((err) => console.log(err));
+
+    input_movie.value = '';
+  }
+
   async searchMovieTitles(movieToFind) {
-    console.log('MOVIES IN LOCAL STORAGE:', Storage.getUserMovies());
     // API fetch request
     const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&query=${movieToFind}`);
     // full API response
