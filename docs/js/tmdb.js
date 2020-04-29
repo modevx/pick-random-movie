@@ -3,7 +3,7 @@ class TMDB {
     this.API_KEY = '8138a9c0b29932d322390d4e16afab9f';
   }
 
-  static findNewMovie() {
+  static findNewMovie(e) {
     // create variable that holds user's search input
     // make API call that returns matching titles
     // display results 
@@ -12,12 +12,14 @@ class TMDB {
     const movieToFind = input_movie.value;
     
     tmdb.searchMovieTitles(movieToFind)
-    .then((arr_searchResults) => {    
-      UI.displayMovieResults(arr_searchResults); 
+    .then((arr_searchResults) => {  
+      UI.renderMovieCards(arr_searchResults); 
     })
     .catch((err) => console.log(err));
 
     input_movie.value = '';
+
+    e.preventDefault();
   }
 
   async searchMovieTitles(movieToFind) {
