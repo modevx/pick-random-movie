@@ -19,9 +19,9 @@ const tmdb = new TMDB();
 home.addEventListener('click', UI.displayHomeScreen);
 
 // [ ] Watch A Movie nav link
-watchMovie.addEventListener('click', UI.displayMovieToWatch);
+watchMovie.addEventListener('click', UI.displayWatchAMovieScreen);
 
-// [ ] Edit My Movies nav link
+// [x] Edit My Movies nav link
 editMovies.addEventListener('click', UI.displayEditMoviesScreen);
 
 // [x] Find Movie button
