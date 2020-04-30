@@ -7,7 +7,14 @@ class UI {
   }
   
   static displayWatchAMovieScreen() {
-    // display screen with big PICK A MOVIE TO WATCH button
+    console.log('UI.displayWatchAMovieScreen()');
+    const userMovies = Storage.getUserMovies();
+    
+    if(userMovies.length < 1) {
+      UI.alertNoMoviesInList();
+    } else {
+      // render MovieRoulette Logo and PICK A MOVIE button
+    }
   }  
   
   static displayEditMoviesScreen() {
@@ -26,8 +33,7 @@ class UI {
   }
   
   static displayMovieResultsScreen(arr_searchResults) {
-    console.log('UI.displayMovieResults()');
-    
+    console.log('UI.displayMovieResults()');    
     // alert if no matching results - not a kids movie
     if(arr_searchResults.length < 1) {
       UI.alertNotAKidsMovie(displayDiv);
@@ -88,10 +94,7 @@ class UI {
   }
 
   // ----- RENDER MOVIES TO UI ----- 
-
-  
-
-  static renderAddMovieCards(arr_searchResults) {
+static renderAddMovieCards(arr_searchResults) {
     console.log('UI.renderAddMovieCards()');
     let outputHTML = '';
       arr_searchResults.forEach((movie) => {    
@@ -153,6 +156,21 @@ class UI {
   
   // ----- ALERT MESSAGES ----- 
   
+  static alertNoMoviesInList() {
+    const addMoviesMessage = `You haven't added any movies to watch!`;
+    const displayDiv = document.getElementById('render');
+    displayDiv.style.display = 'block';
+    displayDiv.innerHTML = `
+        <div class="alert alert-warning">
+          ${addMoviesMessage}
+        </div>
+      `;
+      // make alert disappear after 3 seconds
+      setTimeout(function() {
+        displayDiv.style.display = "none";
+      }, 3000);
+  }
+
   static alertAddedAllMovies(displayDiv) {
     const addMoviesMessage = `Search for more movies or pick one to watch!`;
     displayDiv.innerHTML = `
