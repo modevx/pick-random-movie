@@ -2,6 +2,7 @@ class Storage {
 
   // Get existing movie list to display
   static getUserMovies() {
+    console.log('Storage.getUserMovies()');
     let movieList;
 
     if(localStorage.getItem('ls_movieList') === null) {
@@ -14,7 +15,7 @@ class Storage {
 
   // Add movie to list
   static addToUserMovies(thisMovie){
-    console.log('addToUserMovies()');
+    console.log('Storage.addToUserMovies()');
     // retrieve current userMovieList from local storage
     let movieList = Storage.getUserMovies();    
 
@@ -36,12 +37,14 @@ class Storage {
 
   // Delete movie from list
   static deleteFromUserMovies(thisMovie) {
-    console.log('deleteFromUserMovies()');
+    console.log('Storage.deleteFromUserMovies()');
+    const displayDiv = document.getElementById('render');
     // retrieve current userMovieList from local storage
     let movieList = Storage.getUserMovies();
     // if last movie in list, remove key from storage
     if(movieList.length == 1) {
-      UI.displayEditMoviesScreen();
+      localStorage.removeItem('ls_movieList');
+      UI.alertDeletedAllMovies(displayDiv);
     } else {   
       // if movie list has multiple movies, remove movie from movieList
       movieList = movieList.filter((movie) => movie.id !== thisMovie.id);
