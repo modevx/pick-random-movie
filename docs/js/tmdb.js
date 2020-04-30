@@ -4,6 +4,7 @@ class TMDB {
   }
 
   static findNewMovie(e) {
+    console.log('findNewMovie()');
     // create variable that holds user's search input
     // make API call that returns matching titles
     // display results 
@@ -13,7 +14,7 @@ class TMDB {
     
     tmdb.searchMovieTitles(movieToFind)
     .then((arr_searchResults) => {  
-      UI.renderMovieCards(arr_searchResults); 
+      UI.displayMovieResultsScreen(arr_searchResults); 
     })
     .catch((err) => console.log(err));
 
@@ -23,6 +24,7 @@ class TMDB {
   }
 
   async searchMovieTitles(movieToFind) {
+    console.log('searchMovieTitles()');
     // API fetch request
     const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&query=${movieToFind}`);
     // full API response
