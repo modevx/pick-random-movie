@@ -11,9 +11,9 @@ class UI {
   }  
   
   static displayEditMoviesScreen() {
-    console.log('--- displayEditMoviesScreen() ---');
+    console.log('displayEditMoviesScreen()');
     let userMovies = Storage.getUserMovies();
-    const addMoviesMessage = `You don't have any movies in your list!`;
+    
     // hide previously displayed div and show current
     homeDisplayDiv.style.display = "none";
     watchMovieDisplayDiv.style.display = "none";
@@ -24,15 +24,7 @@ class UI {
     
     // alert if user's movie list is empty
     if(userMovies.length < 1) {
-      displayOutput = `
-        <div class="alert alert-dismissible alert-info">
-          ${addMoviesMessage}
-        </div>
-      `;
-      // make alert disappear after 3 seconds
-      setTimeout(function() {
-        editDisplayDiv.style.display = "none";
-      }, 3000);
+      this.alertDeletedAllMovies(editDisplayDiv);
     } else {
       // build HTML string to display search results
       userMovies.forEach((movie) => {    
@@ -73,7 +65,7 @@ class UI {
   }
   
   static displayMovieResultsScreen(arr_searchResults) {
-    console.log('--- displayMovieResults() ---');
+    console.log('displayMovieResults()');
     // hide previously displayed div and show current
     homeDisplayDiv.style.display = "none";
     watchMovieDisplayDiv.style.display = "none";
@@ -85,36 +77,44 @@ class UI {
     
     // alert if no matching results - not a kids movie
     if(arr_searchResults.length < 1) {
-      console.log('Not a kids movie');
       UI.alertNotAKidsMovie(searchDisplayDiv);
     } else {
-      // build HTML string to display search results
+      // render valid movie results to UI
       UI.renderMovieCards(arr_searchResults);
+      // attach ADD btn eventListeners
       UI.attachAddButtonListeners(arr_searchResults);
     }      
   }
   
   // ----- ATTACH BUTTON LISTENERS ----- 
   static attachAddButtonListeners(arr_searchResults) {
-    console.log('ATTACH BUTTONS CALLED');
+    console.log('attachAddButtonListeners()');
     // Create HTMLCollection of ADD buttons with class of 'btn-add'
-    let btns_add = document.getElementsByClassName('btn-add');    
+    let btns_add = document.getElementsByClassName('btn-add'); 
+    const searchDisplayDiv = document.getElementById('search-results');   
     
-    // add eventListeners to ADD buttons
-    for(let i = 0; i < btns_add.length; i++) {
-      let moviesLeft = arr_searchResults;
-      let btn_addMovie = btns_add[i];
-      let thisMovie = arr_searchResults[i]; 
-      
-      btn_addMovie.addEventListener('click', (e) => {
-        console.log('CLICK!');
+    // if user has added all movie results to their list, display 'Search for more movies or pick one to watch!'
+    if(btns_add.length < 1) {
+      this.alertAddedAllMovies(searchDisplayDiv);
+    } else {
+      // add eventListeners to ADD buttons
+      for(let i = 0; i < btns_add.length; i++) {
+        let moviesLeft = arr_searchResults;
+        let btn_addMovie = btns_add[i];
+        let thisMovie = arr_searchResults[i]; 
         
-        Storage.addToUserMovies(thisMovie);        
-        
-        moviesLeft = arr_searchResults.filter((movie) => movie !== thisMovie);
-        // create new UI.updateMoviesToAdd()
-        UI.renderMovieCards(moviesLeft);        
-      });
+        btn_addMovie.addEventListener('click', (e) => {
+          console.log('ADD movie button clicked');
+          
+          Storage.addToUserMovies(thisMovie);        
+          
+          // remove chosen movie from results and update UI
+          moviesLeft = arr_searchResults.filter((movie) => movie !== thisMovie);
+
+          // render any remaining movies
+          UI.renderMovieCards(moviesLeft);        
+        });
+      }
     }
   }
 
@@ -129,6 +129,7 @@ class UI {
   }
 
   static renderMovieCards(arr_searchResults) {
+    console.log('renderMovieCards()');
     let displayOutput = '';
       arr_searchResults.forEach((movie) => {    
         displayOutput +=
@@ -155,8 +156,30 @@ class UI {
   }
   
   // ----- ALERT MESSAGES ----- 
-  static alertAddedAllMovies() {
-    // display alert 
+  static alertAddedAllMovies(displayDiv) {
+    const addMoviesMessage = `Search for more movies or pick one to watch!`;
+    displayDiv.innerHTML = `
+        <div class="alert alert-dismissible alert-info">
+          ${addMoviesMessage}
+        </div>
+      `;
+      // make alert disappear after 3 seconds
+      setTimeout(function() {
+        displayDiv.style.display = "none";
+      }, 3000);
+  }
+
+  static alertDeletedAllMovies(displayDiv) {
+    const addMoviesMessage = `You're all out of movies!`;
+    displayDiv.innerHTML = `
+        <div class="alert alert-dismissible alert-info">
+          ${addMoviesMessage}
+        </div>
+      `;
+      // make alert disappear after 3 seconds
+      setTimeout(function() {
+        displayDiv.style.display = "none";
+      }, 3000);
   }
   
   static alertNotAKidsMovie(displayDiv) {
