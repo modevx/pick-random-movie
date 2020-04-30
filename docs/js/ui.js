@@ -186,11 +186,14 @@ class UI {
   static alertNotAKidsMovie(displayDiv) {
     console.log('UI.alertNotAKidsMovie()');
     const noResultsMessage = `That's not a kids movie!  Pick a different one!`;
-    displayDiv.innerHTML = `
+    const outputHTML = `
         <div class="alert alert-dismissible alert-danger">
           ${noResultsMessage}
         </div>
-      `
+      `;
+
+      UI.renderDivHTML(outputHTML);
+
       // make alert disappear after 3 seconds
       setTimeout(function() {
         displayDiv.style.display = "none";
