@@ -14,7 +14,7 @@ class Storage {
 
   // Add movie to list
   static addToUserMovies(thisMovie){
-    console.log('--- addToUserMovies() ---');
+    console.log('addToUserMovies()');
     // retrieve current userMovieList from local storage
     let movieList = Storage.getUserMovies();    
 
@@ -36,12 +36,11 @@ class Storage {
 
   // Delete movie from list
   static deleteFromUserMovies(thisMovie) {
-    console.log('--- deleteFromUserMovies() ---');
+    console.log('deleteFromUserMovies()');
     // retrieve current userMovieList from local storage
     let movieList = Storage.getUserMovies();
     // if last movie in list, remove key from storage
     if(movieList.length == 1) {
-      localStorage.removeItem('ls_movieList');
       UI.displayEditMoviesScreen();
     } else {   
       // if movie list has multiple movies, remove movie from movieList
@@ -55,6 +54,7 @@ class Storage {
 
   // Reset all movies 'watched' property to false
   static resetUserMovies() {
+    console.log('resetUserMovies()');
     // this.userMovies.map()
   }
 }
