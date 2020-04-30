@@ -11,46 +11,69 @@ class UI {
   }  
   
   static displayEditMoviesScreen() {
-    console.log('displayEditMoviesScreen()');
+    console.log('UI.displayEditMoviesScreen()');
+    const displayDiv = document.getElementById('render');
     let userMovies = Storage.getUserMovies();
     
-    // hide previously displayed div and show current
-    homeDisplayDiv.style.display = "none";
-    watchMovieDisplayDiv.style.display = "none";
-    searchDisplayDiv.style.display = "none";
-    editDisplayDiv.style.display = "block";
-    
-    let displayOutput = '';
-    
     // alert if user's movie list is empty
-    if(userMovies.length < 1) {
-      this.alertDeletedAllMovies(editDisplayDiv);
+    if(userMovies < 1) {
+      UI.alertDeletedAllMovies(displayDiv);
     } else {
-      // build HTML string to display search results
-      userMovies.forEach((movie) => {    
-        displayOutput +=
-        `
-        <div class="card mb-3" style="max-width: 540px">
-          <div class="row no-gutters">
-            <div class="col-md-4">
-              <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="poster">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">${movie.title}</h5>
-                <p class="card-text">${movie.overview}</p>
-                <div class="text-center">
-                  <button type="button" class="btn btn-delete btn-danger mx-2">Remove</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        `      
-      });
+      // render users current movie list to UI
+      UI.renderDeleteMovieCards(userMovies);      
+      UI.attachDeleteButtonListeners(userMovies);
     }    
-    editDisplayDiv.innerHTML = displayOutput;
+  }
+  
+  static displayMovieResultsScreen(arr_searchResults) {
+    console.log('UI.displayMovieResults()');
     
+    // alert if no matching results - not a kids movie
+    if(arr_searchResults.length < 1) {
+      UI.alertNotAKidsMovie(displayDiv);
+    } else {
+      // render valid movie results to UI
+      UI.renderAddMovieCards(arr_searchResults);
+      // attach ADD btn eventListeners
+      UI.attachAddButtonListeners(arr_searchResults);
+    }      
+  }
+  
+  // ----- ATTACH BUTTON LISTENERS ----- 
+  static attachAddButtonListeners(arr_searchResults) {
+    console.log('UI.attachAddButtonListeners()');
+    // Create HTMLCollection of ADD buttons with class of 'btn-add'
+    let btns_add = document.getElementsByClassName('btn-add'); 
+    const displayDiv = document.getElementById('render');   
+    
+    // if user has added all movie results to their list, display 'Search for more movies or pick one to watch!'
+    if(btns_add.length < 1) {
+      this.alertAddedAllMovies(displayDiv);
+    } else {
+      // add eventListeners to ADD buttons
+      for(let i = 0; i < btns_add.length; i++) {
+        let moviesLeft = arr_searchResults;
+        let btn_addMovie = btns_add[i];
+        let thisMovie = arr_searchResults[i]; 
+        
+        btn_addMovie.addEventListener('click', (e) => {
+          console.log('*ADD BTN CLICK*');
+          
+          Storage.addToUserMovies(thisMovie);        
+          
+          // remove chosen movie from results and update UI
+          moviesLeft = arr_searchResults.filter((movie) => movie !== thisMovie);
+
+          // render any remaining movies
+          UI.renderAddMovieCards(moviesLeft);
+          // attach button listeners
+          UI.attachAddButtonListeners(moviesLeft);
+        });
+      }
+    }
+  }
+
+  static attachDeleteButtonListeners(userMovies) {
     // Create HTMLCollection of DELETE buttons with class of 'btn-delete'
     // add eventListener to delete movie from list (local storage)
     let btns_delete = document.getElementsByClassName('btn-delete');
@@ -63,76 +86,16 @@ class UI {
       });
     }
   }
+
+  // ----- RENDER MOVIES TO UI ----- 
+
   
-  static displayMovieResultsScreen(arr_searchResults) {
-    console.log('displayMovieResults()');
-    // hide previously displayed div and show current
-    homeDisplayDiv.style.display = "none";
-    watchMovieDisplayDiv.style.display = "none";
-    editDisplayDiv.style.display = "none";
-    searchDisplayDiv.style.display = "block";   
-    
-    // re-display on new search if previous alert message
-    searchDisplayDiv.style.display = "block";
-    
-    // alert if no matching results - not a kids movie
-    if(arr_searchResults.length < 1) {
-      UI.alertNotAKidsMovie(searchDisplayDiv);
-    } else {
-      // render valid movie results to UI
-      UI.renderMovieCards(arr_searchResults);
-      // attach ADD btn eventListeners
-      UI.attachAddButtonListeners(arr_searchResults);
-    }      
-  }
-  
-  // ----- ATTACH BUTTON LISTENERS ----- 
-  static attachAddButtonListeners(arr_searchResults) {
-    console.log('attachAddButtonListeners()');
-    // Create HTMLCollection of ADD buttons with class of 'btn-add'
-    let btns_add = document.getElementsByClassName('btn-add'); 
-    const searchDisplayDiv = document.getElementById('search-results');   
-    
-    // if user has added all movie results to their list, display 'Search for more movies or pick one to watch!'
-    if(btns_add.length < 1) {
-      this.alertAddedAllMovies(searchDisplayDiv);
-    } else {
-      // add eventListeners to ADD buttons
-      for(let i = 0; i < btns_add.length; i++) {
-        let moviesLeft = arr_searchResults;
-        let btn_addMovie = btns_add[i];
-        let thisMovie = arr_searchResults[i]; 
-        
-        btn_addMovie.addEventListener('click', (e) => {
-          console.log('ADD movie button clicked');
-          
-          Storage.addToUserMovies(thisMovie);        
-          
-          // remove chosen movie from results and update UI
-          moviesLeft = arr_searchResults.filter((movie) => movie !== thisMovie);
 
-          // render any remaining movies
-          UI.renderMovieCards(moviesLeft);        
-        });
-      }
-    }
-  }
-
-  static attachDeleteButtonListeners(arr_searchResults) {
-
-  }
-
-  // ----- UPDATE DISPLAYS ----- 
-  
-  static updateMovieToWatch() {
-    // display random movie from users list to watch
-  }
-
-  static renderMovieCards(arr_searchResults) {
-    console.log('renderMovieCards()');
-    let displayOutput = '';
+  static renderAddMovieCards(arr_searchResults) {
+    console.log('UI.renderAddMovieCards()');
+    let outputHTML = '';
       arr_searchResults.forEach((movie) => {    
-        displayOutput +=
+        outputHTML +=
         `
         <div class="card mb-3" style="max-width: 540px">
           <div class="row no-gutters">
@@ -152,10 +115,44 @@ class UI {
         </div>
         `      
       });
-      searchDisplayDiv.innerHTML = displayOutput;
+      UI.renderDivHTML(outputHTML);      
+  }
+
+  static renderDeleteMovieCards(arr_searchResults) {
+    console.log('UI.renderDeleteMovieCards()');
+    let outputHTML = '';
+      arr_searchResults.forEach((movie) => {    
+        outputHTML +=
+        `
+          <div class="card mb-3" style="max-width: 540px">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="poster">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">${movie.title}</h5>
+                  <p class="card-text">${movie.overview}</p>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-delete btn-danger mx-2">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `      
+      });
+      UI.renderDivHTML(outputHTML);
+  }
+
+  static renderDivHTML(html) {
+    const displayDiv = document.getElementById('render');
+    displayDiv.innerHTML = html;
+    displayDiv.style.display = 'block';
   }
   
   // ----- ALERT MESSAGES ----- 
+  
   static alertAddedAllMovies(displayDiv) {
     const addMoviesMessage = `Search for more movies or pick one to watch!`;
     displayDiv.innerHTML = `
@@ -170,19 +167,24 @@ class UI {
   }
 
   static alertDeletedAllMovies(displayDiv) {
+    console.log('alertDeletedAllMovies()');
     const addMoviesMessage = `You're all out of movies!`;
-    displayDiv.innerHTML = `
+    const outputHTML = `
         <div class="alert alert-dismissible alert-info">
           ${addMoviesMessage}
         </div>
       `;
-      // make alert disappear after 3 seconds
-      setTimeout(function() {
-        displayDiv.style.display = "none";
-      }, 3000);
+
+    UI.renderDivHTML(outputHTML);
+
+    // make alert disappear after 3 seconds
+    setTimeout(function() {
+      displayDiv.style.display = "none";
+    }, 3000);
   }
   
   static alertNotAKidsMovie(displayDiv) {
+    console.log('UI.alertNotAKidsMovie()');
     const noResultsMessage = `That's not a kids movie!  Pick a different one!`;
     displayDiv.innerHTML = `
         <div class="alert alert-dismissible alert-danger">
