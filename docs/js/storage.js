@@ -55,8 +55,24 @@ class Storage {
     }
   }
 
+  // Pick random movie to watch
+  static pickRandomMovie(unwatchedMovies) {
+    console.log('pickRandomMovie()');
+
+    const userMovies = Storage.getUserMovies();
+    const highNum = unwatchedMovies.length;
+    const randomIndex = Math.floor(Math.random() * highNum);
+    const randomMovie = unwatchedMovies[randomIndex]; 
+
+    randomMovie.watched = true;
+    
+    UI.renderRandomMovie(randomMovie);    
+    
+    // generate movieArray to send back to local storage that includes updated movie.watched = true value
+  }
+
   // Reset all movies 'watched' property to false
-  static resetUserMovies() {
+  static resetUserMovies(userMovies) {
     console.log('resetUserMovies()');
     // this.userMovies.map()
   }
