@@ -13,6 +13,11 @@ class Storage {
     return movieList;
   }
 
+  static getUnwatchedMovies() {
+    const userMovies = Storage.getUserMovies();
+    return userMovies.filter((movie) => movie.watched === false);
+  }
+
   // Add movie to list
   static addToUserMovies(thisMovie){
     console.log('Storage.addToUserMovies()');
@@ -59,16 +64,21 @@ class Storage {
   static pickRandomMovie(unwatchedMovies) {
     console.log('pickRandomMovie()');
 
-    const userMovies = Storage.getUserMovies();
     const highNum = unwatchedMovies.length;
     const randomIndex = Math.floor(Math.random() * highNum);
     const randomMovie = unwatchedMovies[randomIndex]; 
-
+    
+    // update randomMovie's 'watched' property to TRUE
     randomMovie.watched = true;
+    // update userMovies arrray
+    // splice(position to add/remove items, # items to remove, item to add)    
+    const userMovies = Storage.getUserMovies();
+    userMovies.splice(randomIndex, 1, randomMovie);
+    console.log('UPDATED MOVIE LIST',userMovies);
+    // update user movies in local storage
+    localStorage.setItem('ls_movieList', JSON.stringify(userMovies));
     
-    UI.renderRandomMovie(randomMovie);    
-    
-    // generate movieArray to send back to local storage that includes updated movie.watched = true value
+    UI.renderRandomMovie(randomMovie);        
   }
 
   // Reset all movies 'watched' property to false
