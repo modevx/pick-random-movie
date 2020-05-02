@@ -3,7 +3,19 @@ class UI {
   // ----- DISPLAY SCREENS -----
 
   static displayHomeScreen() {
-    // display MovieRoulette homescreen describing app
+    let outputHTML = `
+      <div>
+        <h1>Welcome to Movie Roulette!</h1>
+        <p>Do you spend more time getting your kids to pick a movie than you do watching them?  Take the guess work out of the equation with Movie Roulette!  Here's how you use it:
+        <ol style="padding: 0 10px">
+          <li><span class="text-success">ADD</span> movies using the SEARCH FEATURE</li>
+          <li><span class="text-danger">REMOVE</span> movies from your list using EDIT MY MOVIES</li>
+          <li>To watch a random movie, hit the <span class="text-info">MOVIE ROULETTE!</span> button on the WATCH A MOVIE! screen</li>
+        </ol>
+        </p>
+      </div>
+    `;
+    UI.renderDivHTML(outputHTML);
   }
   
   static displayWatchAMovieScreen() {
