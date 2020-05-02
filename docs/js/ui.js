@@ -182,21 +182,16 @@ class UI {
     const btn_pickMovie = document.getElementsByClassName('btn-pick');
 
     btn_pickMovie[0].addEventListener('click', (e) => {
-      const unwatchedMovies = Storage.getUnwatchedMovies();
-      Storage.pickRandomMovie(unwatchedMovies);
+      Storage.pickRandomMovie();
     });
   }
 
   static renderRandomMovie(randomMovie) {
     console.log('renderRandomMovie()');
     let outputHTML = `
-      <div class="justify-content-center">
-        <div class="row">
-          <h1>Enjoy your movie!</h1>
-        </div>
-        <div class="row col-md-4">
-          <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${randomMovie.poster_path}" alt="poster">
-        </div>
+      <div>
+        <h1 class="text-center">Enjoy your movie!</h1>
+        <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${randomMovie.poster_path}" alt="poster">
       </div>
     `;
       UI.renderDivHTML(outputHTML);      
@@ -299,5 +294,21 @@ class UI {
       }, 3000);
   }
 
+  static alertWatchedAllMovies() {
+    console.log('UI.alertWatchedAllMovies()');
+    const noResultsMessage = `Yay!  You watched all your movies!`;
+    const outputHTML = `
+        <div class="alert alert-success">
+          ${noResultsMessage}
+        </div>
+      `;
+
+      UI.renderDivHTML(outputHTML);
+
+      // make alert disappear after 3 seconds
+      setTimeout(function() {
+        displayDiv.style.display = "none";
+      }, 3000);
+  }
 
 }
