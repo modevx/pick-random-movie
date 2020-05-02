@@ -14,6 +14,7 @@ class Storage {
   }
 
   static getUnwatchedMovies() {
+    console.log('getUnwatchedMovies()');
     const userMovies = Storage.getUserMovies();
     return userMovies.filter((movie) => movie.watched === false);
   }
@@ -61,29 +62,50 @@ class Storage {
   }
 
   // Pick random movie to watch
-  static pickRandomMovie(unwatchedMovies) {
+  static pickRandomMovie() {
     console.log('pickRandomMovie()');
+    // return ALL movies in storage
+    let allMovies = Storage.getUserMovies();
+    // return all UNWATCHED movies in storage
+    let unwatchedMovies = Storage.getUnwatchedMovies();
 
+    // pick random movie from UNWATCHED
     const highNum = unwatchedMovies.length;
     const randomIndex = Math.floor(Math.random() * highNum);
-    const randomMovie = unwatchedMovies[randomIndex]; 
-    
+    const randomMovie = unwatchedMovies[randomIndex];  
+    console.log(`${randomMovie.title}: ${randomMovie.watched}`);  
     // update randomMovie's 'watched' property to TRUE
     randomMovie.watched = true;
-    // update userMovies arrray
-    // splice(position to add/remove items, # items to remove, item to add)    
-    const userMovies = Storage.getUserMovies();
-    userMovies.splice(randomIndex, 1, randomMovie);
-    console.log('UPDATED MOVIE LIST',userMovies);
-    // update user movies in local storage
-    localStorage.setItem('ls_movieList', JSON.stringify(userMovies));
-    
+    console.log(`${randomMovie.title}: ${randomMovie.watched}`);  
+
+    // 1. iterate through allMovies array and find matching movie by id
+    // 2. update movie.watched to TRUE     
+    allMovies.map((movie) => {
+      if(movie.id === randomMovie.id) {
+        movie.watched = true;
+      }
+    });
+    console.log('ALL MOVIES:', allMovies);
+
+    // 3. set local storage with updated allMovies array
+    localStorage.setItem('ls_movieList', JSON.stringify(allMovies));
+
+    // 
+    if(Storage.getUnwatchedMovies().length < 1) {
+      UI.alertWatchedAllMovies();
+      Storage.resetUserMovies();
+    }    
+
     UI.renderRandomMovie(randomMovie);        
   }
 
   // Reset all movies 'watched' property to false
-  static resetUserMovies(userMovies) {
+  static resetUserMovies() {
     console.log('resetUserMovies()');
-    // this.userMovies.map()
+    const allMovies = Storage.getUserMovies();
+    allMovies.map((movie) => {
+      movie.watched = false;
+    })
+    localStorage.setItem('ls_movieList', JSON.stringify(allMovies));
   }
 }
