@@ -8,16 +8,14 @@ class UI {
   
   static displayWatchAMovieScreen() {
     console.log('UI.displayWatchAMovieScreen()');
-    const userMovies = Storage.getUserMovies();
-    const unwatchedMovies = userMovies.filter((movie) => movie.watched === false);
 
-    console.log('UNWATCHED MOVIES:', unwatchedMovies);
+    const unwatchedMovies = Storage.getUnwatchedMovies();
     
     if(unwatchedMovies.length < 1) {
       UI.alertNoMoviesInList();
     } else {
       // render MovieRoulette Logo and PICK A MOVIE button
-      UI.renderWatchAMovie(unwatchedMovies);
+      UI.renderWatchAMovie();
     }
   }  
   
@@ -98,7 +96,14 @@ class UI {
   }
 
   // ----- RENDER ELEMENTS TO UI ----- 
-static renderAddMovieCards(arr_searchResults) {
+  static renderHomeScreen() {
+    const outputHTML = `
+    
+    `;
+    UI.renderDivHTML(outputHTML);
+  }
+  
+  static renderAddMovieCards(arr_searchResults) {
     console.log('UI.renderAddMovieCards()');
     let outputHTML = '';
       arr_searchResults.forEach((movie) => {    
@@ -152,7 +157,7 @@ static renderAddMovieCards(arr_searchResults) {
       UI.renderDivHTML(outputHTML);
   }
 
-  static renderWatchAMovie(unwatchedMovies) {
+  static renderWatchAMovie() {
     console.log('renderWatchAMovie()');
     let outputHTML = `
       <div>
@@ -165,6 +170,7 @@ static renderAddMovieCards(arr_searchResults) {
     const btn_pickMovie = document.getElementsByClassName('btn-pick');
 
     btn_pickMovie[0].addEventListener('click', (e) => {
+      const unwatchedMovies = Storage.getUnwatchedMovies();
       Storage.pickRandomMovie(unwatchedMovies);
     });
   }
@@ -172,23 +178,15 @@ static renderAddMovieCards(arr_searchResults) {
   static renderRandomMovie(randomMovie) {
     console.log('renderRandomMovie()');
     let outputHTML = `
-        <div class="card mb-3" style="max-width: 540px">
-          <div class="row no-gutters">
-            <div class="col-md-4">
-              <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${randomMovie.poster_path}" alt="poster">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">${randomMovie.title}</h5>
-                <p class="card-text">${randomMovie.overview}</p>
-                <div class="text-center">
-                  <button type="button" class="btn btn-add btn-success mx-2">Add To My List!</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="justify-content-center">
+        <div class="row">
+          <h1>Enjoy your movie!</h1>
         </div>
-        `;
+        <div class="row col-md-4">
+          <img class="card-img p-2" src="https://image.tmdb.org/t/p/original${randomMovie.poster_path}" alt="poster">
+        </div>
+      </div>
+    `;
       UI.renderDivHTML(outputHTML);      
   }
 
