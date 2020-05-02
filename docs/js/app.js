@@ -5,11 +5,7 @@ const editMovies = document.getElementById('nav-link-edit');
 const input_movie = document.getElementById('input-find');
 const btn_search = document.getElementById('btn-find');
 
-// display div variables
-const homeDisplayDiv = document.getElementById('home');
-const watchMovieDisplayDiv = document.getElementById('watch-movie');
-const editDisplayDiv = document.getElementById('edit-list');
-const searchDisplayDiv = document.getElementById('search-results');
+const displayDiv = document.getElementById('render');
 
 // initialize TMBD object
 const tmdb = new TMDB();

@@ -2,6 +2,7 @@ class Storage {
 
   // Get existing movie list to display
   static getUserMovies() {
+    console.log('Storage.getUserMovies()');
     let movieList;
 
     if(localStorage.getItem('ls_movieList') === null) {
@@ -12,9 +13,14 @@ class Storage {
     return movieList;
   }
 
+  static getUnwatchedMovies() {
+    const userMovies = Storage.getUserMovies();
+    return userMovies.filter((movie) => movie.watched === false);
+  }
+
   // Add movie to list
   static addToUserMovies(thisMovie){
-    console.log('addToUserMovies()');
+    console.log('Storage.addToUserMovies()');
     // retrieve current userMovieList from local storage
     let movieList = Storage.getUserMovies();    
 
@@ -36,12 +42,14 @@ class Storage {
 
   // Delete movie from list
   static deleteFromUserMovies(thisMovie) {
-    console.log('deleteFromUserMovies()');
+    console.log('Storage.deleteFromUserMovies()');
+    const displayDiv = document.getElementById('render');
     // retrieve current userMovieList from local storage
     let movieList = Storage.getUserMovies();
     // if last movie in list, remove key from storage
     if(movieList.length == 1) {
-      UI.displayEditMoviesScreen();
+      localStorage.removeItem('ls_movieList');
+      UI.alertDeletedAllMovies(displayDiv);
     } else {   
       // if movie list has multiple movies, remove movie from movieList
       movieList = movieList.filter((movie) => movie.id !== thisMovie.id);
@@ -52,8 +60,29 @@ class Storage {
     }
   }
 
+  // Pick random movie to watch
+  static pickRandomMovie(unwatchedMovies) {
+    console.log('pickRandomMovie()');
+
+    const highNum = unwatchedMovies.length;
+    const randomIndex = Math.floor(Math.random() * highNum);
+    const randomMovie = unwatchedMovies[randomIndex]; 
+    
+    // update randomMovie's 'watched' property to TRUE
+    randomMovie.watched = true;
+    // update userMovies arrray
+    // splice(position to add/remove items, # items to remove, item to add)    
+    const userMovies = Storage.getUserMovies();
+    userMovies.splice(randomIndex, 1, randomMovie);
+    console.log('UPDATED MOVIE LIST',userMovies);
+    // update user movies in local storage
+    localStorage.setItem('ls_movieList', JSON.stringify(userMovies));
+    
+    UI.renderRandomMovie(randomMovie);        
+  }
+
   // Reset all movies 'watched' property to false
-  static resetUserMovies() {
+  static resetUserMovies(userMovies) {
     console.log('resetUserMovies()');
     // this.userMovies.map()
   }
