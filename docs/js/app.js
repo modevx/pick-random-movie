@@ -10,6 +10,8 @@ const displayDiv = document.getElementById('render');
 // initialize TMBD object
 const tmdb = new TMDB();
 
+UI.displayHomeScreen();
+
 // ADD EVENT LISTENERS TO UI ELEMENTS
 // [ ] Home nav link
 home.addEventListener('click', UI.displayHomeScreen);
