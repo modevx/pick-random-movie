@@ -12,15 +12,21 @@ class TMDB {
     // clear search field
     const movieToFind = input_movie.value;
     
-    tmdb.searchMovieTitles(movieToFind)
-    .then((arr_searchResults) => {  
-      UI.displayMovieResultsScreen(arr_searchResults); 
-    })
-    .catch((err) => console.log(err));
+    console.log('SEARCH INPUT VALUE:', movieToFind );
 
-    input_movie.value = '';
+    if(movieToFind === '') {
+      UI.alertEmptySearchField();
+    } else {
+        tmdb.searchMovieTitles(movieToFind)
+        .then((arr_searchResults) => {  
+          UI.displayMovieResultsScreen(arr_searchResults); 
+        })
+        .catch((err) => console.log(err));
 
-    e.preventDefault();
+        input_movie.value = '';
+
+        e.preventDefault();
+      }
   }
 
   async searchMovieTitles(movieToFind) {
