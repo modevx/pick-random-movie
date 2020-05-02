@@ -6,7 +6,7 @@ class UI {
     let outputHTML = `
       <div>
         <h1>Welcome to Movie Roulette!</h1>
-        <p>Do you spend more time getting your kids to pick a movie than you do watching them?  Take the guess work out of the equation with Movie Roulette!  Here's how you use it:
+        <p>Do you spend more time waiting your kids to pick a movie than you do watching them?  Take out the guess work, save some time, and MOVIE ROULTETTE!
         <ol style="padding: 0 10px">
           <li><span class="text-success">ADD</span> movies using the SEARCH FEATURE</li>
           <li><span class="text-danger">REMOVE</span> movies from your list using EDIT MY MOVIES</li>
@@ -280,6 +280,23 @@ class UI {
   
   static alertMovieAlreadyInList(movie) {
     // display alert if movie already exists in users list
+  }
+
+  static alertEmptySearchField() {
+    console.log('UI.alertEmptySearchField()');
+    const noResultsMessage = `Gimme something to search!`;
+    const outputHTML = `
+        <div class="alert alert-danger">
+          ${noResultsMessage}
+        </div>
+      `;
+
+      UI.renderDivHTML(outputHTML);
+
+      // make alert disappear after 3 seconds
+      setTimeout(function() {
+        displayDiv.style.display = "none";
+      }, 3000);
   }
 
 
