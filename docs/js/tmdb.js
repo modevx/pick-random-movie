@@ -7,32 +7,35 @@ class TMDB {
     console.log('TMDB.findNewMovie()');
     // create variable that holds user's search input
     // make API call that returns matching titles
-    // display results 
+    // display results
     // create btn-add elements
     // clear search field
     const movieToFind = input_movie.value;
-    
-    console.log('SEARCH INPUT VALUE:', movieToFind );
 
-    if(movieToFind === '') {
+    console.log('SEARCH INPUT VALUE:', movieToFind);
+
+    if (movieToFind === '') {
       UI.alertEmptySearchField();
     } else {
-        tmdb.searchMovieTitles(movieToFind)
-        .then((arr_searchResults) => {  
-          UI.displayMovieResultsScreen(arr_searchResults); 
+      tmdb
+        .searchMovieTitles(movieToFind)
+        .then((arr_searchResults) => {
+          UI.displayMovieResultsScreen(arr_searchResults);
         })
         .catch((err) => console.log(err));
 
-        input_movie.value = '';
+      input_movie.value = '';
 
-        e.preventDefault();
-      }
+      e.preventDefault();
+    }
   }
 
   async searchMovieTitles(movieToFind) {
     console.log('TMDB.searchMovieTitles()');
     // API fetch request
-    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&query=${movieToFind}`);
+    const res = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${this.API_KEY}&query=${movieToFind}`
+    );
     // full API response
     const returnedMovies = await res.json();
     // array used to hold newly created Movie objects
@@ -41,9 +44,13 @@ class TMDB {
     // Return only animated & family movies
     // Filter out 'adult' genre
     // Create new Movie objects and add to return array
-    returnedMovies.results.forEach(movie => {
+    returnedMovies.results.forEach((movie) => {
       try {
-        if(movie.poster_path != null && (movie.genre_ids.includes(16) && movie.genre_ids.includes(10751))) {
+        if (
+          movie.poster_path != null &&
+          movie.genre_ids.includes(16) &&
+          movie.genre_ids.includes(10751)
+        ) {
           const newMovie = new Movie(movie);
           arr_searchResults.push(newMovie);
         }
@@ -52,6 +59,6 @@ class TMDB {
       }
     });
 
-    return arr_searchResults;      
+    return arr_searchResults;
   }
 }
